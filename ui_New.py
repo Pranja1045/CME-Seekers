@@ -7,7 +7,7 @@ def fetch_data():
 
     column_frequency = {}
 
-    file_path = ''  # define the path
+    file_path = "ACE data.txt"  # define the path
 
     with open(file_path, 'r') as file:
         for line in file:
@@ -32,12 +32,16 @@ root.title("Magnetic Reconnection Frequency")
 
 frame = ttk.Frame(root)
 frame.pack(padx=10, pady=10)
-
+def click(event):
+    date_entry.configure(state="NORMAL")
+    date_entry.delete(0,"end")
 date_label = ttk.Label(frame, text="Enter Year:")
 date_label.grid(row=0, column=0, padx=5, pady=5)
 
 date_entry = ttk.Entry(frame)
 date_entry.insert(0, 'data year range 2000-2019')
+date_entry.configure(state="disabled")
+date_entry.bind("<Button-1>",click)
 date_entry.grid(row=0, column=1, padx=5, pady=5)
 
 fetch_button = ttk.Button(frame, text="Fetch Data", command=fetch_data)
