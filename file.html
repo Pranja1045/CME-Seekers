@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Weather Widget</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+
+    .widget-container {
+      background-color: #333333;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #ffffff;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    #hp30-value, #hp60-value, #kp-value, #geomagnetic-storm-status, #warning-message, #current-time, #greeting {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    #hp30-value, #hp60-value, #kp-value {
+      font-weight: bold;
+    }
+
+    .danger {
+      color: #ff0000;
+      font-weight: bold;
+      animation: flash 1s infinite;
+    }
+
+    #storm-advice {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    @keyframes flash {
+      0%, 100% {
+        opacity: 1;
+        color: #ff0000;
+      }
+      50% {
+        opacity: 0;
+        color: #ffffff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="widget-container">
+    <div id="greeting"></div>
+    <h2>🚀 GEOSTORM PREDICTOMETER 🌠</h2>
+    <div id="hp30-value">HP30: <span id="hp30">3.72</span></div>
+    <div id="hp60-value">HP60: <span id="hp60">5.28</span></div>
+    <div id="kp-value">Kp: <span id="kp">6</span></div>
+    <div id="geomagnetic-storm-status" class="danger">Geomagnetic Storm: Danger</div>
+    <div id="warning-message">Space Weather Alert: Geomagnetic Storm Warning!</div>
+    <div id="current-time">Current Time: <span id="time">12:45 PM</span></div>
+    <div id="storm-advice">
+      <strong>Surviving Solar Flares in Style:</strong>
+      <p>1. Stay cosmically chic with space weather updates.</p>
+      <p>2. Shield your gadgets from solar dazzle, darling.</p>
+      <p>3. Navigate the stars cautiously, don't lose your way!</p>
+      <p>4. Embrace the auroras, darling! They're the galaxy's runway.</p>
+    </div>
+  </div>
+  <script>
+    // Function to fetch space weather data and alerts
+    async function fetchSpaceWeatherData() {
+      try {
+        // Simulated data for testing purposes
+        const simulatedData = {
+          hp30: getRandomFloat(2, 4),
+          hp60: getRandomFloat(4, 6),
+          kp: getRandomInt(1, 9),
+        };
+
+        // Simulated alert data
+        const simulatedAlert = {
+          message: "Space Weather Alert: Geomagnetic Storm Warning!",
+        };
+
+        updateWidget(simulatedData, simulatedAlert);
+
+        // Update current time
+        const currentTimeElement = document.getElementById('time');
+        const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        currentTimeElement.textContent = currentTime;
+
+        // Update greeting
+        const greetingElement = document.getElementById('greeting');
+        const hour = new Date().getHours();
+
+        if (hour >= 5 && hour < 12) {
+          greetingElement.textContent = 'Good Morning!';
+        } else if (hour >= 12 && hour < 18) {
+          greetingElement.textContent = 'Good Afternoon!';
+        } else {
+          greetingElement.textContent = 'Good Evening!';
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error.message);
+      }
+    }
+
+    // Function to generate random float between min and max
+    function getRandomFloat(min, max) {
+      return (Math.random() * (max - min) + min).toFixed(2);
+    }
+
+    // Function to generate random integer between min and max
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    // Function to update widget with fetched data and alerts
+    function updateWidget(data, alert) {
+      document.getElementById('hp30').textContent = data.hp30;
+      document.getElementById('hp60').textContent = data.hp60;
+      document.getElementById('kp').textContent = data.kp;
+
+      const stormStatusElement = document.getElementById('geomagnetic-storm-status');
+      const warningMessageElement = document.getElementById('warning-message');
+
+      if (data.kp >= 5) {
+        stormStatusElement.textContent = 'Geomagnetic Storm: Danger';
+        stormStatusElement.classList.add('danger');
+        warningMessageElement.textContent = alert.message;
+      } else {
+        stormStatusElement.textContent = 'Geomagnetic Storm: No Danger';
+        stormStatusElement.classList.remove('danger');
+        warningMessageElement.textContent = '';
+      }
+    }
+
+    // Initial data fetch
+    fetchSpaceWeatherData();
+
+    // Set interval for periodic data refresh
+    setInterval(fetchSpaceWeatherData, 60000); // Refresh every 60 seconds
+  </script>
+</body>
+</html>
+
+
