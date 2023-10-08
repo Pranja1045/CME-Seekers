@@ -20,7 +20,7 @@ To use this code, you need the following requirements:
 
     Python 3.x installed on your system.
     The Tkinter library, which is usually included with Python.
-
+with the help of the html file we will be able to analyise the data and get to know about the severity of Geostorm and Magnetic reconnection via our mobile phone. It will the flash warning sign in different colour notion makinjg it much more simpler and user friendly. 
 ## Installation
 
 You can clone this GitHub repository to your local machine using the following command:
